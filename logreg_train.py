@@ -8,7 +8,7 @@ from data_preparation import data_preparation
 
 house_names = ['Gryffindor', 'Hufflepuff', 'Ravenclaw', 'Slytherin']
 list_of_thetas = []
-
+regs = []
 for house in house_names:
     print("Training ", house, "vs all")
     x, x_val, y, y_val = data_preparation('datasets/dataset_train.csv', house)
@@ -16,6 +16,9 @@ for house in house_names:
     lr_g.fit(x, y, alpha=2e-4, iterations=50000)
     list_of_thetas.append(lr_g.get_thetas())
     lr_g.evaluate(x_val, y_val)
+    regs.append(lr_g)
+
+
 print(list_of_thetas)
 
 if os.path.exists('weights.csv'):

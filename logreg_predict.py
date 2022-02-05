@@ -19,23 +19,19 @@ with open(weights_file) as file:
     for line in lines:
         weights.append(np.array(line[:-1].split(',')).reshape(-1, 1))
 weights = np.array(weights)
-print(weights)
 lrs = []
 
 for theta in weights:
     theta = theta.astype('float64').reshape(11,)
     l = MyLogisticRegression()
-    print(theta)
     l.load_weights(theta)
     lrs.append(l)
-print(df)
 df = df.drop(['Care of Magical Creatures', 'Arithmancy', 'Astronomy', 'Hogwarts House'], axis=1)
 df2 = df.drop(df.columns[df.apply(lambda col: not is_numeric_dtype(col))], axis=1).drop('Index', axis=1)
 
 for column in df2:
     if column != 'Hogwarts House':
         df2[column].fillna(df2[column].mean(), inplace=True)
-print(df2)
 y_hats=[]
 for lr in lrs:
     y_hat = lr.predict(df2)
